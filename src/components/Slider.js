@@ -27,16 +27,16 @@ export default function Slider(props) {
 
     useEffect(() => {
         fetch(url).then(result => result.json()).then(
-            (result) => {
+            result => {
                 if(result.success){
                     if(result.sliders.length > 0){
                         setSlider(result.sliders);
                     }
                     createInterval(0,result.sliders.length);
                 }
-                else console.log('Slider could not be fethced.');
+                else console.warn('Slider could not be fethced.');
             },
-            (error) => console.log(error)
+            error => console.warn(error)
         );
     }, []);
 
