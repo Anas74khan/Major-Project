@@ -90,6 +90,7 @@ Route::get('/products/{category}/{subcategory}', [\App\Http\Controllers\ProductC
 Route::get('/products/{category}/{subcategory}/{brand}', [\App\Http\Controllers\ProductController::class, 'get']);
 Route::get('/products/{category}/{subcategory}/{brand}/{from}', [\App\Http\Controllers\ProductController::class, 'get']);
 Route::get('/products/{category}/{subcategory}/{brand}/{from}/{limit}', [\App\Http\Controllers\ProductController::class, 'get']);
+Route::get('/products/{category}/{subcategory}/{brand}/{from}/{limit}/{order_by}', [\App\Http\Controllers\ProductController::class, 'get']);
 
 /*
 |---------------------------------------------------------------------------

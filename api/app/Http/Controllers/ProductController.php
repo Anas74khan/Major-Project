@@ -101,7 +101,7 @@ class ProductController extends Controller
         ];
     }
 
-    public function get($category = "all", $subcategory = "all" ,$brand = "all", $from = 0, $limit = 20){
+    public function get($category = "all", $subcategory = "all" ,$brand = "all", $from = 0, $limit = 20, $order_by = 'rating'){
 
         $tags = Tag :: where('tagTypeId',1) -> get(['id','tag','slug']);
         $categories = [];
@@ -122,8 +122,22 @@ class ProductController extends Controller
         if($from > 0) $from -= 1;
 
         $products = Product :: leftJoin('tags AS brand','brand.id','=','products.brand') -> take($limit) -> skip($from);
-        $products -> leftJoin('reviews','reviews.productId','=','products.id') -> groupBy(['products.id','products.categories','products.subcategories','brand.tag','products.name','products.description']) -> orderBy('rating','DESC');
-        $products -> select('products.id','products.categories','products.subcategories','brand.tag AS brand','products.name','products.description',Product::raw('COALESCE(round(AVG(reviews.rating),2),0) AS rating'),Product::raw('COALESCE((SELECT count(varieties.id) FROM varieties WHERE varieties.productId = products.id GROUP BY varieties.productId),0) AS varieties'));
+        $products -> leftJoin('reviews','reviews.productId','=','products.id') -> groupBy(['products.id','products.categories','products.subcategories','brand.tag','products.name','products.description']);
+        $products -> select(
+            'products.id','products.categories','products.subcategories',
+            'brand.tag AS brand','products.name','products.description',
+            Product::raw('COALESCE(round(AVG(reviews.rating),2),0) AS rating'),
+            Product::raw('COALESCE((SELECT count(varieties.id) FROM varieties
+                            WHERE varieties.productId = products.id GROUP BY varieties.productId),0) AS varieties'),
+            Product::raw('COALESCE((SELECT CASE WHEN varieties.offerEnable = 1 THEN varieties.offerPercentage
+                            ELSE 0 END FROM varieties
+                            WHERE varieties.productId = products.id
+                            ORDER BY varieties.offerPercentage DESC LIMIT 1),0) AS offer_percent')
+        );
+        if($order_by == 'offer')
+            $products -> orderBy('offer_percent','DESC');
+        else
+            $products -> orderBy('rating','DESC');
         $products -> havingRaw('varieties > 0');
 
         if($brand != "all")
@@ -146,7 +160,14 @@ class ProductController extends Controller
                 $temp[$j] = $subcategories[$temp[$j]];
             $products[$i]['subcategories'] = $temp;
 
-            $variety = Variety :: where('productId',$products[$i]['id']) -> where('visibility',1) -> first();
+            $variety = Variety :: where('productId',$products[$i]['id']) -> where('visibility',1);
+
+            if($order_by == 'offer'){
+                $variety -> orderBy('offerEnable','DESC');
+                $variety -> orderBy('offerPercentage','DESC');
+            }
+
+            $variety = $variety -> first();
 
             $products[$i]['varietyId'] = $variety['id'];
             $products[$i]['image'] = asset($this -> table['imagePath'].json_decode($variety['images'],true)[0]);

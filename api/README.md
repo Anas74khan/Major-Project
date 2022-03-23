@@ -22,9 +22,10 @@ currently only having some basic functionality such as getting the pages sliders
     -   api/products/{category-slug} for getting 20 top rated products of a category.
     -   api/products/{category-slug}/{subcategory-slug} for getting 20 top rated products of a category and subcategory.
     -   api/products/{category-slug}/{subcategory-slug}/{brand-slug} for getting 20 top rated products of a category, subcategory and brand.
-    -   api/products/{category-slug}/{subcategory-slug}/{brand-slug}/{from} for getting 20 top rated products of a category, subcategory and brand stating from a particular number.
+    -   api/products/{category-slug}/{subcategory-slug}/{brand-slug}/{from} for getting 20 top rated products of a category, subcategory and brand starting from a particular number.
         -   Say {from} = 3 it will skip first 2 products.
-    -   api/products/{category-slug}/{subcategory-slug}/{brand-slug}/{from}/{limit} for getting 20 top rated products of a category, subcategory and brand stating from a particular number having limit.
+    -   api/products/{category-slug}/{subcategory-slug}/{brand-slug}/{from}/{limit} for getting top rated products of a category, subcategory and brand upto specified limit.
+    -   api/products/{category-slug}/{subcategory-slug}/{brand-slug}/{from}/{limit}/{order_by} get specified products sorted by order_by value default is rating.
     -   Slugs can have value all for ignoring particular slug, from and limit can have value greater than 1.
 
 #### Below mentioned request require login and type is mention after them
