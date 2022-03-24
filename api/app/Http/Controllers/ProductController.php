@@ -15,7 +15,7 @@ class ProductController extends Controller
     
     protected $table = [
         'tableName' => 'products',
-        'imagePath' => 'images/products',
+        'imagePath' => 'images/products/',
         'fieldDetails' => [
             'categories' => [
                 'type'     => 'select',
