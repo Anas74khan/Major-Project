@@ -5,6 +5,10 @@
   --theme-text-dark: #fff;
   --theme-warning: #f3a43c;
   --theme-text-warning: #fff;
+
+  --color-success: #2bae66;
+
+  --silent-text: #c2c2c2;
 }
 * {
   padding: 0;
@@ -231,4 +235,95 @@ input[type="search"]::-webkit-search-results-decoration {
 }
 .slider-container .sliders .slider.active {
   display: flex;
+}
+
+/* Product */
+.product-card {
+  padding: 25px 20px;
+  width: 190px;
+  display: inline-block;
+}
+.product-card .product-image {
+  width: 150px;
+  height: 150px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.product-card .product-description {
+  font-size: 14px;
+  padding-top: 15px;
+}
+.product-card .product-description .product-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 6px;
+}
+.product-card .product-description .product-price {
+  margin-top: 5px;
+}
+.product-card .product-description .product-price .product-selling-price {
+  font-size: 16px;
+  font-weight: 600;
+}
+.product-card .product-description .product-price .product-not-price {
+  color: var(--silent-text);
+  position: relative;
+}
+.product-card .product-description .product-price .product-not-price::after {
+  content: "";
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--silent-text);
+}
+.product-card .product-description .product-price .product-offer {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+/* Card */
+.card {
+  margin: 10px;
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 8%);
+}
+.card.card-full {
+  margin: 10px 0;
+}
+.card.card-outline {
+  box-shadow: none !important;
+  border: 1px solid #eee;
+}
+.card .card-header {
+  padding: 15px 20px;
+  position: relative;
+}
+.card .card-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;
+}
+.card .card-header .card-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 32px;
+}
+.card .card-header .card-subtitle {
+  font-size: 14px;
+  color: var(--silent-text);
+}
+.card-body {
+  width: 100%;
+  overflow: hidden;
 }
