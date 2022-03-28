@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Tag;
-use App\Models\Review;
-use App\Models\Cart;
-use App\Models\User;
 use App\Models\Variety;
 
 class ProductController extends Controller
@@ -181,6 +178,32 @@ class ProductController extends Controller
         }
 
         return ['success' => true, 'products' => $products];
+    }
+
+    public function product($id = 0){
+        $product = Product :: join('varieties','varieties.productId','=','products.id')
+                    -> where('varieties.id',$id) -> where('varieties.visibility',1)
+                    -> first(['products.id','products.categories','products.subcategories','products.name','products.brand','products.description']);
+        
+        if(empty($product['id'])) return ['success' => false,'code' => 201,'text' => 'Product not found.'];
+        
+        $product['varieties'] = Variety :: where('visibility',1) -> where('productId',$product['id'])
+                                    -> get(['varieties.id','varieties.name','varieties.id','varieties.images',
+                                            'varieties.features','varieties.inStock','varieties.sellingPrice',
+                                            'varieties.offerEnable','varieties.offerPrice','varieties.offerPercentage']);
+        
+        for($i = 0; $i < count($product['varieties']); $i++){
+            $images = json_decode($product['varieties'][$i]['images'],true);
+
+            for($j = 0; $j < count($images); $j++)
+                $images[$j] = asset($this -> table['imagePath'].$images[$j]);
+
+            $product['varieties'][$i]['images'] = $images;
+            $product['varieties'][$i]['features'] = json_decode($product['varieties'][$i]['features'],true);
+        }
+
+
+        return ['success' => true,'product' => $product];
     }
 
 }

@@ -18,6 +18,7 @@ currently only having some basic functionality such as getting the pages sliders
 -   api/tags/subcategories/{category-slug} for subCategories.
 -   api/tags/brands/{category-slug} for subCategories.
 -   Products
+    -   api/product/{varietyId} for getting product detail with provided variety id.
     -   api/products for getting 20 top rated products.
     -   api/products/{category-slug} for getting 20 top rated products of a category.
     -   api/products/{category-slug}/{subcategory-slug} for getting 20 top rated products of a category and subcategory.

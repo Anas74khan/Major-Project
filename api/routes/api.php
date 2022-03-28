@@ -92,6 +92,8 @@ Route::get('/products/{category}/{subcategory}/{brand}/{from}', [\App\Http\Contr
 Route::get('/products/{category}/{subcategory}/{brand}/{from}/{limit}', [\App\Http\Controllers\ProductController::class, 'get']);
 Route::get('/products/{category}/{subcategory}/{brand}/{from}/{limit}/{order_by}', [\App\Http\Controllers\ProductController::class, 'get']);
 
+Route::get('/product/{id}', [\App\Http\Controllers\ProductController::class, 'product']);
+
 /*
 |---------------------------------------------------------------------------
 | Login
