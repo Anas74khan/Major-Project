@@ -186,6 +186,9 @@ class ProductController extends Controller
                     -> first(['products.id','products.categories','products.subcategories','products.name','products.brand','products.description']);
         
         if(empty($product['id'])) return ['success' => false,'code' => 201,'text' => 'Product not found.'];
+
+        $product['brand'] = Tag :: where('id',$product['brand']) -> first('tag');
+        $product['brand'] = $product['brand']['tag'] ? $product['brand']['tag'] : 'Brand not found';
         
         $product['varieties'] = Variety :: where('visibility',1) -> where('productId',$product['id'])
                                     -> get(['varieties.id','varieties.name','varieties.id','varieties.images',
@@ -199,7 +202,6 @@ class ProductController extends Controller
                 $images[$j] = asset($this -> table['imagePath'].$images[$j]);
 
             $product['varieties'][$i]['images'] = $images;
-            $product['varieties'][$i]['features'] = json_decode($product['varieties'][$i]['features'],true);
         }
 
 
