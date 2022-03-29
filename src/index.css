@@ -529,3 +529,27 @@ input[type="search"]::-webkit-search-results-decoration {
   text-align: justify;
   margin-bottom: 10px;
 }
+
+/* Categories */
+.categories {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 100px;
+  background: #fff;
+}
+.categories .category {
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.8px;
+  padding: 10px;
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  color: #000;
+}
+.categories .category:hover {
+  color: var(--theme-color);
+}
