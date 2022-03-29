@@ -3,7 +3,6 @@ import React from 'react';
 export default function Product(props) {
 
     const product = !props.dummy ? props.product : {};
-    console.log(product)
 
     return (
         <div className='product-card'>

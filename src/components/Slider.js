@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import api from '../services/api';
 
 export default function Slider(props) {
 
@@ -26,18 +27,15 @@ export default function Slider(props) {
     };
 
     useEffect(() => {
-        fetch(url).then(result => result.json()).then(
-            result => {
-                if(result.success){
-                    if(result.sliders.length > 0){
-                        setSlider(result.sliders);
-                    }
-                    createInterval(0,result.sliders.length);
+        api(url,{},result => {
+            if(result.success){
+                if(result.sliders.length > 0){
+                    setSlider(result.sliders);
                 }
-                else console.warn('Slider could not be fethced.');
-            },
-            error => console.warn(error)
-        );
+                createInterval(0,result.sliders.length);
+            }
+            else console.warn('Slider could not be fethced.');
+        });
     }, []);
 
     const previousSlide = () => {

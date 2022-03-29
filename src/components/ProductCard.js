@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Product from './Product';
+import api from '../services/api';
 
 export default function ProductCard(props) {
-    const url = window.APIURL + props.url;
+    const url = props.url;
     const title = props.title;
     const subtitle = props.subtitle;
 
     const [products,setProducts] = useState([]);
     useEffect(() => {
-        fetch(url).then(response => response.json()).then(
-            result => {
-                if(result.success)
-                    setProducts(result.products);
-                else
-                    console.warn("Products could not be fetched. Error: " + result.text);
-            },
-            error => console.warn(error)
-        );
+        api(url,{},result => {
+            if(result.success)
+                setProducts(result.products);
+            else
+                console.warn("Products could not be fetched. Error: " + result.text);
+        });
     },[]);
     
     return (
