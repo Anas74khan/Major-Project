@@ -3,7 +3,7 @@ import api from '../services/api';
 
 export default function Slider(props) {
 
-    const url = window.APIURL + 'sliders/' + (props.category ? props.category : '');
+    const url = 'sliders/' + (props.category ? props.category : '');
     const [sliders,setSlider] = useState(['asset/images/slider.png']);
 
     const sliderRef = useRef(null);
