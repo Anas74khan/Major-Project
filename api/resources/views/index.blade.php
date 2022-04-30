@@ -37,6 +37,15 @@
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/popper.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+        <script>
+
+            const loader = {
+                show: () => $(document).find('.preloader').css('opacity','0.7').css('display','unset'),
+                hide: () => $(document).find('.preloader').css('display','none').css('opacity','1')
+            };
+
+        </script>
         
         @yield('script')
 

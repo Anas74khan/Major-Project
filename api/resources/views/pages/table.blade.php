@@ -11,13 +11,6 @@
             height: 35px;
             cursor: pointer;
         }
-        .image-upload-container input{
-            display: none;
-        }
-        .image-upload-container img{
-            height: 100px;
-            border-radius: 5px;
-        }
     </style>
 
 @stop
@@ -168,6 +161,7 @@
             };
             #save = e => {
                 e.preventDefault();
+                loader.show();
 
                 let form = document.getElementById(this.#id);
                 
@@ -179,6 +173,7 @@
                     processData: false,
                     contentType: false,
                     success: (response, status, xhr) => {
+                        loader.hide();
                         swal({
                             title: response.text,
                             text: "",
@@ -227,13 +222,15 @@
                     `;
                 else if(fieldDetail.type === "image")
                     input = `
-                        <div class="image-upload-container">
-                            <input
-                                type="file"
-                                name="${fieldDetail.name}"
-                                id="${fieldDetail.name}"
-                            />
-                            <img src="${data && data[field] ? '{{ asset('') }}' + fieldDetail.path + data[field] : '{!! asset('images/placeholder.png') !!}'}" data-image="${data && data[field] ? '{{ asset('') }}' + fieldDetail.path + data[field] : '{!! asset('images/placeholder.png') !!}'}"/>
+                        <div class="uploads mt-1">
+                            <div class="image-upload-container">
+                                <input
+                                    type="file"
+                                    name="${fieldDetail.name}"
+                                    id="${fieldDetail.name}"
+                                />
+                                <img src="${data && data[field] ? '{{ asset('') }}' + fieldDetail.path + data[field] : '{!! asset('images/placeholder.png') !!}'}" data-image="${data && data[field] ? '{{ asset('') }}' + fieldDetail.path + data[field] : '{!! asset('images/placeholder.png') !!}'}"/>
+                            </div>
                         </div>
                     `;
                 else

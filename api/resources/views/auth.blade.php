@@ -6,6 +6,24 @@
     <link href="{{ asset('css/sweetalert2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-switch.min.css') }}" rel="stylesheet">
+    
+    <style>
+        .image-upload-container{
+            border: 1px solid #eee;
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .image-upload-container input{
+            display: none;
+        }
+        .image-upload-container img{
+            height: 100px;
+            border-radius: 5px;
+        }
+    </style>
 
     @yield('pageStyle')
 
@@ -308,7 +326,7 @@
             @yield('pageContent')
             
             <footer class="footer text-center">
-                Designed and Developed by <em>Mohd Anas Khan</em>.
+                Developed by <em>Major project team</em>.
             </footer>
 
         </div>
@@ -344,6 +362,7 @@
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-switch.min.js') }}"></script>
 
     <script>
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'}});
@@ -364,6 +383,7 @@
 
         $(() => {
 
+            $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
             $(document).on('click','.image-upload-container img',function(e){ $(this).parent().find('input').click(); });
             $(document).on('change','.image-upload-container input',function(e){
                 const img = $(this).parent().find('img');

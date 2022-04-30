@@ -53,6 +53,8 @@
             const form = document.getElementById('loginform');
             if(loginProcess || !form.checkValidity) return;
 
+            loader.show();
+
             loginProcess = true;
             $.ajax({
                 type: 'POST',
@@ -63,6 +65,7 @@
                 processData: false,
                 success: (response, status, xhr) => {
                     if(response.result) return window.location.replace('dashboard');
+                    loader.hide();
                     loginProcess = false;
                     alert(response.error);
                 },

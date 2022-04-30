@@ -67,7 +67,13 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::delete('/sliders/{id}', [\App\Http\Controllers\SliderController::class, 'delete']);
 
     Route::get('/product', [\App\Http\Controllers\ProductController::class, 'viewIndex']);
+    Route::get('/product/{id}', [\App\Http\Controllers\ProductController::class, 'varieties']);
     Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index']);
+    
+    Route::post('/variety', [\App\Http\Controllers\ProductController::class, 'VarietyAdd']);
+    Route::put('/variety/{id}', [\App\Http\Controllers\ProductController::class, 'VarietyEdit']);
+    Route::put('/visibility/variety/{id}', [\App\Http\Controllers\ProductController::class, 'visibility']);
+    Route::put('/stock/variety/{id}', [\App\Http\Controllers\ProductController::class, 'stock']);
 
     Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'view']);
     Route::get('/admins', [\App\Http\Controllers\AdminController::class, 'index']);
