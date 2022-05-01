@@ -9,6 +9,8 @@ use App\Models\Cart;
 
 class OrderController extends Controller
 {
+
+    public $productImagePath = "images/products/";
     
     public function view(Request $request, $status = "all", $page = 0){
 
@@ -35,6 +37,40 @@ class OrderController extends Controller
         return view('pages.orders',$pageData);
     }
 
+    public function viewOrder(Request $request, $orderNo = null){
+        $order = Order :: where('orderNo', $orderNo)
+                    -> join('products', 'orders.productId', '=', 'products.id')
+                    -> join('varieties', 'orders.varietyId', '=', 'varieties.id')
+                    -> join('tags', 'tags.id', '=', 'products.brand')
+                    -> first([
+                        'varieties.images', 'tags.tag AS brand', 'orders.orderNo',
+                        'orders.productName', 'orders.sellingPrice', 'orders.offerPrice',
+                        'orders.offerEnable', 'orders.name', 'orders.type',
+                        'orders.mobileNo', 'orders.address1', 'orders.address2',
+                        'orders.pincode', 'orders.city', 'orders.state',
+                        'orders.status', 'orders.id', 'orders.quantity'
+                    ]);
+        
+        $order['offerPercentage'] = 0;
+        if(!empty($order['id'])){
+            $order['image'] = asset($this -> productImagePath . json_decode($order['images'], true)[0]);
+            $order['offerPercentage'] = round((($order['sellingPrice'] - $order['offerPrice']) / $order['sellingPrice']) * 100);
+        }
+        else
+            $order['images'] = asset('images/placeholder.png');
+
+        $pageData = [
+            'admin' => $request -> admin,
+            'breadcrumbs' => [
+                ['name' => 'Order', 'url' => url('orders')],
+                ['name' => $order['orderNo']]
+            ],
+            'order' => $order
+        ];
+        
+        return view('pages.order',$pageData);
+    }
+
     // Action
 
     public function index($status = null, $page = 0){
@@ -43,7 +79,8 @@ class OrderController extends Controller
             -> take(20)
             -> join('products', 'orders.productId', '=', 'products.id')
             -> join('varieties', 'orders.varietyId', '=', 'varieties.id')
-            -> join('statuses', 'orders.status', '=', 'statuses.id');
+            -> join('statuses', 'orders.status', '=', 'statuses.id')
+            -> orderBy('orders.id','DESC');
         
         $totalPages = null;
 
@@ -63,7 +100,7 @@ class OrderController extends Controller
             $orders -> where('orders.status', '=', 6);
             $totalPages = Order :: where('orders.status', '=', 6);
         }
-        else $totalPages = Order :: where('orders.status', '!=', 7);
+        else $totalPages = Order :: where('orders.status', '>', 0);
 
         $orders = $orders -> get([
             'statuses.status',
@@ -71,6 +108,7 @@ class OrderController extends Controller
             'products.name AS productName',
             'varieties.name AS varietyName',
             'varieties.images',
+            'orders.orderNo',
             'orders.quantity',
             'orders.name',
             'orders.mobileNo',
@@ -89,7 +127,7 @@ class OrderController extends Controller
         return [
             'success' => true,
             'currentPage' => $page,
-            'totalPages' => $totalPages -> count(),
+            'totalPages' => ($totalPages -> count()) / 20,
             'orders' => $orders
         ];
     }
@@ -134,6 +172,7 @@ class OrderController extends Controller
         for($i = 0; $i < count($cart); $i++){
             array_push($orders,new Order());
             $orders[$i] -> userId = $request -> user['id'];
+            $orders[$i] -> orderNo = time().$i.$orders[$i] -> userId;
             foreach($address as $key => $data)
                 $orders[$i] -> $key = $data;
 

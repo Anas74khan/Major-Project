@@ -89,6 +89,7 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/orders', [\App\Http\Controllers\OrderController::class, 'view']);
     Route::get('/orders/{status}', [\App\Http\Controllers\OrderController::class, 'view']);
     Route::get('/orders/{status}/{page}', [\App\Http\Controllers\OrderController::class, 'view']);
+    Route::get('/order/{orderNo}', [\App\Http\Controllers\OrderController::class, 'viewOrder']);
 
 });
 
