@@ -100,6 +100,50 @@
             width: 100%;
             background: #999;
         }
+        .statuses{
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            position: relative;
+        }
+        .status{
+            text-align: center;
+            z-index: 1;
+        }
+        .status-title{
+            font-weight: 600;
+            font-size: 16px;
+            background: #fff;
+        }
+        .status-status{
+            font-size: 13px;
+            padding-top: 6px;
+            background: #fff;
+            color: #999;
+        }
+        .status-status.danger{
+            color: var(--danger);
+        }
+        .status-status.done{
+            color: var(--success);
+        }
+        .status-status.warning{
+            color: var(--warning);
+        }
+        /* .statuses::after{
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%);
+            height: 3px;
+            background: #ddd;
+            z-index: 0;
+        } */
+        .status-action{
+            text-align: center;
+            margin-top: 20px;
+        }
 
     </style>
 
@@ -108,6 +152,58 @@
 @section('pageContent')
 
     <div class="container-fluid">
+
+        <div class="card rounded">
+            <div class="card-body">
+                <div class="status-flow"></div>
+                <div class="statuses">
+                    <div class="status">
+                        <div class="status-title">Order Placed</div>
+                        <div class="status-status done">Placed by Customer</div>
+                    </div>
+
+                    @if($order['status'] == 2)
+
+                        <!-- Cancelled Order -->
+                        <div class="status">
+                            <div class="status-title"> {{ $statuses[1]['status'] }} </div>
+                            <div class="status-status success"> {{ $statuses[1]['status'] }} by Customer </div>
+                        </div>
+                        <!-- Cancelled Order -->
+
+                    @elseif($order['status'] == 7)
+
+                        <!-- Cancelled Order -->
+                        <div class="status">
+                            <div class="status-title"> {{ $statuses[6]['status'] }} </div>
+                            <div class="status-status danger"> {{ $statuses[6]['status'] }} </div>
+                        </div>
+                        <!-- Cancelled Order -->
+                    
+                    @else
+                        @for($i = 3; $i < 7; $i++)
+                        
+                            
+                            <div class="status">
+                                <div class="status-title"> {{ $statuses[$i - 1]['status'] }} </div>
+                                <div class="status-status {{ $order['status'] == ($i - 1) || ($i == 3 && $order['status'] == 1)  ? 'warning' : '' }} {{ $order['status'] >= $i ? 'done' : '' }}"> {{ $order['status'] >= $i  ? $statuses[$i - 1]['status'] : ( $order['status'] == ($i - 1) || ($i == 3 && $order['status'] == 1)  ? 'Pending' : 'In Queue' ) }} </div>
+                            </div>
+
+                        @endfor
+                    @endif
+
+                </div>
+                <div class="status-action">
+                    @if($order['status'] == 1)
+                        <button class="btn btn-success btn-sm rounded" onclick="nextStatus('Do you want to accept this order?')">Accept Order</button>
+                        <button class="btn btn-danger btn-sm rounded" onclick="reject()">Reject Order</button>
+                    @elseif($order['status'] < 6 && $order['status'] > 1)
+                        <button class="btn btn-success btn-sm rounded" onclick="nextStatus()">{{ $statuses[$order['status']]['status'] }}</button>
+                    @endif
+                </div>
+            </div>
+        </div>
+
         <div class="row">
 
             <div class="col-md-4">
@@ -158,4 +254,76 @@
         </div>
     </div>
     
+@stop
+
+
+@section('pageScript')
+
+    <script>
+
+        const url = `{{ url('order') }}`;
+        const nextStatus = (title = "Update status of order?") => {
+            swal(
+                {
+                    title: "Perform action",
+                    text: title,
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, update!",
+                    showLoaderOnConfirm: true
+                },
+                () => $.ajax({
+                    type: 'POST',
+                    url: `${url}/nextaction/{{ $order['orderNo'] }}`,
+                    dataType: 'json',
+                    cache : false,
+                    processData: false,
+                    success: (response, status, xhr) => {
+                        swal({
+                                title: response.text,
+                                text: "",
+                                type:  response.success ? "success" : "error",   
+                            },
+                            () => window.location.reload()
+                        );
+                    }
+                })
+            );
+        };
+
+        const reject = () => {
+            swal(
+                {
+                    title: "Are you sure?",
+                    text: "This order will be rejected!",
+                    type: "warning",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, reject it!",
+                    showLoaderOnConfirm: true
+                },
+                () => $.ajax({
+                    type: 'POST',
+                    url: `${url}/reject/{{ $order['orderNo'] }}`,
+                    dataType: 'json',
+                    cache : false,
+                    processData: false,
+                    success: (response, status, xhr) => {
+                        swal({
+                                title: response.text,
+                                text: "",
+                                type:  response.success ? "success" : "error",   
+                            },
+                            () => window.location.reload()
+                        );
+                    }
+                })
+            );
+        };
+
+    </script>
+
 @stop

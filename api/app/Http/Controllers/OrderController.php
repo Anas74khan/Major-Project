@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Order;
 use App\Models\Cart;
+use App\Models\Status;
 
 class OrderController extends Controller
 {
@@ -65,7 +66,8 @@ class OrderController extends Controller
                 ['name' => 'Order', 'url' => url('orders')],
                 ['name' => $order['orderNo']]
             ],
-            'order' => $order
+            'order' => $order,
+            'statuses' => Status :: get()
         ];
         
         return view('pages.order',$pageData);
@@ -203,6 +205,40 @@ class OrderController extends Controller
             return ['success' => true, 'order' => $order];
         
         return ['success' => false, 'code' => 123, 'text' => 'Invalid action.'];
+    }
+
+    public function rejectOrder(Request $request,$orderNo = 0){
+        $result = [];
+        $result['success'] = Order :: where('orderNo', $orderNo) -> where('status', 1) -> update(['status' => 7]);
+
+        if($result['success'])
+            $result['text'] = "Product rejected successfully.";
+        else
+            $result['text'] = "Action error: some error occured.";
+        
+        return $result;
+    }
+
+    public function nextAction(Request $request,$orderNo = 0){
+        $result = ['success' => false];
+        $order = Order ::where('orderNo', $orderNo) -> where('status', '<', 6) -> where('status', '!=', 2) -> first();
+        
+        if(empty($order['id']))
+            $result['text'] = "Invalid action: order has no actions available.";
+        else{
+            $status = 3;
+            if($order['status'] != 1)
+                $status = $order['status'] + 1;
+            
+            $result['success'] = Order :: where('id', $order['id']) -> update(['status' => $status]);
+
+            if($result['success'])
+                $result['text'] = "Status updated successfully;";
+            else
+                $result['text'] = "Error occured: Some error occured try again later.";
+        }
+
+        return $result;
     }
 
 }

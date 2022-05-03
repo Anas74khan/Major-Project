@@ -90,6 +90,8 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::get('/orders/{status}', [\App\Http\Controllers\OrderController::class, 'view']);
     Route::get('/orders/{status}/{page}', [\App\Http\Controllers\OrderController::class, 'view']);
     Route::get('/order/{orderNo}', [\App\Http\Controllers\OrderController::class, 'viewOrder']);
+    Route::post('/order/reject/{orderNo}', [\App\Http\Controllers\OrderController::class, 'rejectOrder']);
+    Route::post('/order/nextaction/{orderNo}', [\App\Http\Controllers\OrderController::class, 'nextAction']);
 
 });
 
