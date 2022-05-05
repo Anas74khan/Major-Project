@@ -48,7 +48,7 @@
                         </b>
                         
                         <span class="logo-text">
-                             <img src="{{ asset('images/logo-text.png') }}" alt="logo-text" class="dark-logo" />
+                             <img src="{{ asset('images/logo-text.png') }}" alt="logo-text" class="dark-logo" width="100px" />
                              <img src="{{ asset('images/logo-light-text.png') }}" class="light-logo" alt="logo-text" />
                         </span>
                     </a>
