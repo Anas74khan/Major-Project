@@ -16,7 +16,7 @@
         <link href="{{ asset('css/style.min.css') }}" rel="stylesheet">
         <link href="{{ asset('icons/material-design-iconic-font/css/materialdesignicons.min.css') }}" rel="stylesheet">
         <link href="{{ asset('icons/flag-icon-css/flag-icon.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('icons/font-awesome/css/fontawesome.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('icons/font-awesome/css/fontawesome-all.min.css') }}" rel="stylesheet">
         <link href="{{ asset('icons/themify-icons/themify-icons.css') }}" rel="stylesheet">
     </head>
 
