@@ -1,0 +1,12 @@
+html,
+body {
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.link-tap:hover {
+    color: rgb(67, 161, 246);
+    text-decoration: underline;
+}
