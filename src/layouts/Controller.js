@@ -2,11 +2,12 @@ import React from "react";
 // react library for routing
 import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // core components
-import AdminNavbar from "components/Navbars/AdminNavbar.js";
+import UserNavbar from "components/Navbars/UserNavbar.js";
 
 import routes from "routes.js";
+import Footer from "components/Footers/Footer";
 
-function Admin() {
+function Controller() {
   const location = useLocation();
   const mainContentRef = React.useRef(null);
   React.useEffect(() => {
@@ -19,7 +20,7 @@ function Admin() {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
-      if (prop.layout === "/admin") {
+      if (prop.layout === "") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -36,16 +37,17 @@ function Admin() {
   return (
     <>
       <div className="main-content" ref={mainContentRef}>
-        <AdminNavbar
+        <UserNavbar
           theme={"dark"}
         />
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/admin/dashboard" />
+          <Redirect from="*" to="/home" />
         </Switch>
+        <Footer />
       </div>
     </>
   );
 }
 
-export default Admin;
+export default Controller;

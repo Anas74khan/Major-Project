@@ -1,6 +1,6 @@
 {
-    "name": "argon-dashboard-pro-react",
-    "version": "1.2.1",
+    "name": "Shopper",
+    "version": "0.0.1",
     "private": true,
     "dependencies": {
         "@fortawesome/fontawesome-free": "5.15.3",

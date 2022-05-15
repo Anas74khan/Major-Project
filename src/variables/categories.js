@@ -35,7 +35,7 @@ const categories = [{
     },
     {
         id: 7,
-        title: "Beauty, Toy & More",
+        title: "Toy & More",
         url: "https://wallpaperaccess.com/full/4148492.jpg",
     },
     {

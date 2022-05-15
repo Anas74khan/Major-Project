@@ -3,7 +3,7 @@ import { useLocation, Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
-// core components
+// core components Remove below
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
@@ -44,21 +44,8 @@ const Auth = (props) => {
   return (
     <>
       <div className="main-content" ref={mainContent}>
-        <AuthNavbar />
+        <AuthNavbar />{/* Remove*/}
         <div className="header bg-gradient-info py-7 py-lg-8">
-          <Container>
-            <div className="header-body text-center mb-7">
-              <Row className="justify-content-center">
-                <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
-                  <p className="text-lead text-light">
-                    Use these awesome forms to login or create new account in
-                    your project for free.
-                  </p>
-                </Col>
-              </Row>
-            </div>
-          </Container>
           <div className="separator separator-bottom separator-skew zindex-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +62,6 @@ const Auth = (props) => {
             </svg>
           </div>
         </div>
-        {/* Page content */}
         <Container className="mt--8 pb-5">
           <Row className="justify-content-center">
             <Switch>
@@ -85,7 +71,7 @@ const Auth = (props) => {
           </Row>
         </Container>
       </div>
-      <AuthFooter />
+      <AuthFooter />{/* Remove*/}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Product(props) {
+export default function ProductCard(props) {
 
     const product = !props.dummy ? props.product : {};
 

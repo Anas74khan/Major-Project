@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import api from '../services/api';
+import api from 'services/api';
 
 export default function Slider(props) {
 
@@ -8,7 +8,7 @@ export default function Slider(props) {
 
     const sliderRef = useRef(null);
 
-    let interval = 0;
+    // let interval = 0;
     const createInterval = (current,total) => {
         // clearInterval(interval);
 
@@ -36,7 +36,7 @@ export default function Slider(props) {
             }
             else console.warn('Slider could not be fethced.');
         });
-    }, []);
+    }, [url]);
 
     const previousSlide = () => {
         const slides = sliderRef.current.getElementsByClassName('slider');

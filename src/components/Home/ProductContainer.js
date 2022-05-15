@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Product from './Product';
-import api from '../services/api';
+import ProductCard from 'components/Home/ProductCard';
+import api from 'services/api';
 
-export default function ProductCard(props) {
+export default function ProductContainer(props) {
     const url = props.url;
     const title = props.title;
     const subtitle = props.subtitle;
@@ -15,19 +15,19 @@ export default function ProductCard(props) {
             else
                 console.warn("Products could not be fetched. Error: " + result.text);
         });
-    },[]);
+    },[url, products]);
     
     return (
-        <section className='card'>
+        <section className='card mt-3 mb-0'>
             <div className='card-header'>
                 <div className="card-title">{title}</div>
                 { subtitle ? <div className='card-subtitle'>{subtitle}</div> : '' }
             </div>
             <div className='card-body'>
-                <div className='products-container' style={{width: products.length == 0 ? '190px' : `${products.length * 190}px`}}>
+                <div className='products-container' style={{width: products.length === 0 ? '190px' : `${products.length * 190}px`}}>
                     {
-                        products.length == 0 ? <Product dummy={true} /> :
-                            products.map(product => <Product key={product.id} product={product} /> )
+                        products.length === 0 ? <ProductCard dummy={true} /> :
+                            products.map(product => <ProductCard key={product.id} product={product} /> )
                     }
                 </div>
             </div>
