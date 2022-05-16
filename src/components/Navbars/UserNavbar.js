@@ -63,6 +63,29 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
       >
         <Container fluid>
           <Collapse navbar isOpen={true}>
+
+            <Nav className="align-items-center mr-md-auto" navbar>
+              <NavItem className="d-xl-none">
+                <div
+                  className={classnames(
+                    "pr-3 sidenav-toggler",
+                    { active: sidenavOpen },
+                    { "sidenav-toggler-dark": theme === "dark" }
+                  )}
+                  onClick={toggleSidenav}
+                >
+                  <div className="sidenav-toggler-inner">
+                    <i className="sidenav-toggler-line" />
+                    <i className="sidenav-toggler-line" />
+                    <i className="sidenav-toggler-line" />
+                  </div>
+                </div>
+              </NavItem>
+              <NavItem>
+                <div className="logo">Shopper</div>
+              </NavItem>
+            </Nav>
+
             <Form
               className={classnames(
                 "navbar-search form-inline mr-sm-3",
@@ -90,23 +113,8 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
               </button>
             </Form>
 
-            <Nav className="align-items-center ml-md-auto" navbar>
-              <NavItem className="d-xl-none">
-                <div
-                  className={classnames(
-                    "pr-3 sidenav-toggler",
-                    { active: sidenavOpen },
-                    { "sidenav-toggler-dark": theme === "dark" }
-                  )}
-                  onClick={toggleSidenav}
-                >
-                  <div className="sidenav-toggler-inner">
-                    <i className="sidenav-toggler-line" />
-                    <i className="sidenav-toggler-line" />
-                    <i className="sidenav-toggler-line" />
-                  </div>
-                </div>
-              </NavItem>
+
+            <Nav className="align-items-center ml-auto" navbar>
               <NavItem className="d-sm-none">
                 <NavLink onClick={openSearch}>
                   <i className="ni ni-zoom-split-in" style={{fontSize:20}}/>
@@ -334,8 +342,6 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
                   </Row>
                 </DropdownMenu>
               </UncontrolledDropdown>
-            </Nav>
-            <Nav className="align-items-center ml-auto ml-md-0" navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle className="nav-link pr-0" color="" tag="a">
                   <Media className="align-items-center">

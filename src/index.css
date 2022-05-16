@@ -1,3 +1,20 @@
+.navbar-search{
+  max-width: 600px;
+  width: 100%;
+}
+.navbar-search .form-group{
+  width: 100%;
+}
+.navbar-search .form-group .input-group{
+  width: 100%;
+  border-radius: .25rem;
+}
+.logo{
+  font-weight: 600;
+  color: var(--white);
+  margin-right: 10px;
+}
+
 /* Product */
 .product-card {
     padding: 25px 20px;
