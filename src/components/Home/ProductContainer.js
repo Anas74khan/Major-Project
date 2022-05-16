@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ProductCard from 'components/Home/ProductCard';
-import api from 'services/api';
+import products from 'variables/products';
 
 export default function ProductContainer(props) {
-    const url = props.url;
+    // const url = props.url;
     const title = props.title;
     const subtitle = props.subtitle;
 
-    const [products,setProducts] = useState([]);
-    useEffect(() => {
-        api(url,{},result => {
-            if(result.success)
-                setProducts(result.products);
-            else
-                console.warn("Products could not be fetched. Error: " + result.text);
-        });
-    },[url, products]);
     
     return (
         <section className='card mt-3 mb-0'>

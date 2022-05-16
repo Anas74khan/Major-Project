@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import api from 'services/api';
+import React, { useRef } from 'react';
+import sliders from 'variables/sliders';
 
 export default function Slider(props) {
 
     const url = 'sliders/' + (props.category ? props.category : '');
-    const [sliders,setSlider] = useState(['asset/images/slider.png']);
 
     const sliderRef = useRef(null);
 
@@ -26,17 +25,7 @@ export default function Slider(props) {
         }
     };
 
-    useEffect(() => {
-        api(url,{},result => {
-            if(result.success){
-                if(result.sliders.length > 0){
-                    setSlider(result.sliders);
-                }
-                createInterval(0,result.sliders.length);
-            }
-            else console.warn('Slider could not be fethced.');
-        });
-    }, [url]);
+
 
     const previousSlide = () => {
         const slides = sliderRef.current.getElementsByClassName('slider');

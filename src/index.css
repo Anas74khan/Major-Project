@@ -107,6 +107,15 @@
     color: var(--success);
     font-weight: 600;
   }
+  .card .card-header .card-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
+  }
+  .card .card-header .card-subtitle {
+    font-size: 14px;
+    color: var(--light);
+  }
   
 /* Footer */
 .footer {
