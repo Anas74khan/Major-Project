@@ -125,7 +125,12 @@ class SliderController extends Controller
                     -> orderBy('sliders.displayOrder','asc')
                     -> get(['sliders.image']);
         for($i = 0; $i < count($sliders); $i++)
-            $sliders[$i] = asset($this -> table['fieldDetails']['image']['path'].$sliders[$i]['image']);
+            $sliders[$i] = [
+                'src' => asset($this -> table['fieldDetails']['image']['path'].$sliders[$i]['image']),
+                'altText' => '',
+                'caption' => '',
+                'header' => ''
+            ];
         return ['success' => true, 'sliders' => $sliders];
     }
 
