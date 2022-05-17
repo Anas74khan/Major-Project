@@ -1,5 +1,5 @@
 import Home from "views/pages/home/home";
-import ItemDetails from "views/pages/dashboard/itemDetails";
+import Product from "views/pages/product/product";
 import Login from "views/pages/examples/Login.js";
 import Register from "views/pages/examples/Register.js";
 
@@ -11,10 +11,10 @@ const routes = [{
         layout: "",
     },
     {
-        path: "/detail-page",
-        name: "detail",
-        miniName: "L",
-        component: ItemDetails,
+        path: "/product",
+        name: "Product",
+        miniName: "P",
+        component: Product,
         layout: "",
     },
     {

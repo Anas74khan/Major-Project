@@ -12,7 +12,7 @@ const ProductCard = props => {
             <div className='product-image' style={{backgroundImage: product.image ? `url("${product.image}")` : ''}}></div>
             <div className='product-description'>
                 <div className='product-name'>{product.name ? product.name : ''}</div>
-                <div className='product-rating'>{product.rating && product.rating > 0 ? `${product.rating} star` : 'No review yet'}</div>
+                <small className='product-rating'>{product.rating && product.rating > 0 ? `${product.rating} star` : 'No review yet'}</small>
                 {product.sellingPrice ?
                         <div className='product-price'>
                             <span className='product-selling-price'> ₹{product.offerEnable ? product.offerPrice : product.sellingPrice} </span>

@@ -122,7 +122,7 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
                 </NavLink>
               </NavItem>
               <UncontrolledDropdown nav>
-                <DropdownToggle className="nav-link" color="" tag="a">
+                <DropdownToggle className="nav-link cursor-pointer" color="" tag="a">
                   <i className="ni ni-bell-55" style={{fontSize:20}}/>
                 </DropdownToggle>
                 <DropdownMenu
@@ -294,7 +294,7 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
                 </DropdownMenu>
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
-                <DropdownToggle className="nav-link" color="" tag="a">
+                <DropdownToggle className="nav-link cursor-pointer" color="" tag="a">
                   <i className="fas fa-cart-plus" style={{fontSize:20}}/>
                 </DropdownToggle>
                 <DropdownMenu
@@ -344,7 +344,7 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
                 </DropdownMenu>
               </UncontrolledDropdown>
               <UncontrolledDropdown nav>
-                <DropdownToggle className="nav-link pr-0" color="" tag="a">
+                <DropdownToggle className="nav-link pr-0 cursor-pointer" color="" tag="a">
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
                       <img

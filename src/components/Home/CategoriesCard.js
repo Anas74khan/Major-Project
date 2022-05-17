@@ -4,9 +4,9 @@ import categories from "variables/categories";
 
 const Category = (props) => {
     return (
-        <Col className="text-center">
+        <Col className="text-center cursor-pointer">
             {/* <img alt="..." className="rounded-circle shadow" src={props.data.url} height={80} width={80}/> */}
-            <h4 className="mt-2" style={{cursor:"pointer"}}>{props.data.title}</h4>
+            <h4 className="mt-2">{props.data.title}</h4>
         </Col>
     );
 }
