@@ -1,6 +1,7 @@
 import React from 'react';
 import products from 'variables/products';
 import { Container } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 
 const ProductCard = props => {
@@ -8,7 +9,7 @@ const ProductCard = props => {
     const product = !props.dummy ? props.product : {};
 
     return (
-        <div className='product-card'>
+        <Link to={{pathname: '/product'}} className='product-card'>
             <div className='product-image' style={{backgroundImage: product.image ? `url("${product.image}")` : ''}}></div>
             <div className='product-description'>
                 <div className='product-name'>{product.name ? product.name : ''}</div>
@@ -21,7 +22,7 @@ const ProductCard = props => {
                         </div>
                 : ''}
             </div>
-        </div>
+        </Link>
     )
 };
 

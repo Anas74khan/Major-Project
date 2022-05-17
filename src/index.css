@@ -77,10 +77,14 @@
     text-overflow: ellipsis;
     margin-bottom: 6px;
   }
+  .product-card .product-description .product-rating{
+    color: var(--light);
+  }
   .product-card .product-description .product-price {
     margin-top: 5px;
   }
   .product-card .product-description .product-price .product-selling-price {
+    color: var(--darker);
     font-size: 16px;
     font-weight: 600;
   }
