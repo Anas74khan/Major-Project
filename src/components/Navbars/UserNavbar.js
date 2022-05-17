@@ -60,6 +60,7 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
       <Navbar
         className="navbar-top navbar-expand border-bottom navbar-dark"
         style={{backgroundColor:'#43a1f6'}}
+        sticky="top"
       >
         <Container fluid>
           <Collapse navbar isOpen={true}>

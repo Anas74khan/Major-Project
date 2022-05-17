@@ -14,6 +14,32 @@
   color: var(--white);
   margin-right: 10px;
 }
+.overflow-hidden{
+  overflow: hidden;
+}
+.overflow-x{
+  overflow-x: scroll;
+}
+.overflow-y{
+  overflow-y: scroll;
+}
+.overflow{
+  overflow: scroll;
+}
+.overflow::-webkit-scrollbar, .overflow-x::-webkit-scrollbar, .overflow-y::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+.overflow::-webkit-scrollbar-track, .overflow-x::-webkit-scrollbar-track, .overflow-y::-webkit-scrollbar-track {
+  background: transparent; 
+}
+.overflow::-webkit-scrollbar-thumb, .overflow-x::-webkit-scrollbar-thumb, .overflow-y::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 5px;
+}
+.overflow::-webkit-scrollbar-thumb:hover,.overflow-x::-webkit-scrollbar-thumb:hover,.overflow-y::-webkit-scrollbar-thumb:hover {
+  background: #777; 
+}
 
 /* Product */
 .product-card {
