@@ -16,10 +16,10 @@ function Product(props){
 
               <Row className='below-md-fixed'>
                   <Col>
-                      <Button color='primary' type="button" className='w-100' to="/cart" tag={Link}>Add to Cart</Button>
+                      <Button color='primary' type="button" className='btn-block' to="/cart" tag={Link}>Add to Cart</Button>
                   </Col>
                   <Col>
-                      <Button color="warning" type="button" className='w-100'>Buy Now</Button>
+                      <Button color="warning" type="button" className='btn-block'>Buy Now</Button>
                   </Col>
               </Row>
             </Col>
