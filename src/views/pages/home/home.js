@@ -1,19 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import CategoryCard from "components/Home/CategoriesCard";
 import Slider from "components/Home/Slider";
 import ProductContainer from "components/Home/ProductContainer";
 import Seo from "components/Seo";
+import api from "services/api";
+import Loader from "components/Loader";
 
 const Home = () =>{
+
+    const [page, setPage] = useState({});
+    
+    useEffect(() => {
+        api("",{}, result => {
+            if(!result.success) alert("Some error occured! Try refreshing the page");
+
+            setPage(result);
+        });
+    },[]);
+    
+    if(!page.success)
+        return(
+            <Loader />
+        );
+
     return(
         <>
             <Seo title="Home | E-commerce" />
-            <CategoryCard />
-            <hr className="my-0 text-primary bg-secondary shadow" />
-            <Slider />
-            <ProductContainer url="products/all/all/all/0/6" title="Top rated products" subtitle="Shop Now" />
-            <ProductContainer url="products/all/all/all/0/6/offer" title="Best Discount" subtitle="Time to save more" />
+            { page.categories ? <CategoryCard categories={page.categories} /> : <></> }
+            <hr className="my-0 text-primary bg-secondary shadow"/>
+            { page.sliders ? <Slider sliders={page.sliders} /> : <></> }
+
+            {
+                page.sections && page.sections.map((section, index) =>
+                    <ProductContainer key={index} products={section.products} title={section.title} subtitle={section.subtitle} />
+                )
+            }
+
         </>
     )
 }

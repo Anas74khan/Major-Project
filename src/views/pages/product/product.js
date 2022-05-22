@@ -1,9 +1,28 @@
-import ProductContainer from 'components/Home/ProductContainer'
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Row, Col, Card, CardBody, Button } from 'reactstrap'
+import ProductContainer from 'components/Home/ProductContainer';
+import Loader from 'components/Loader';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Row, Col, Card, CardBody, Button } from 'reactstrap';
+import api from 'services/api';
 
 function Product(props){
+  const productId = props.match.params.product;
+  const [product, setProduct] = useState({});
+  const [variety, setVariety] = useState(0);
+
+  useEffect(() => {
+    api('product/' + productId, {}, result => {
+      if(!result.success) window.location.replace("home");
+
+      setProduct(result.product);
+    });
+  }, []);
+
+  if(!product.id)
+    return (
+      <Loader />
+    );
+
   return (
     <>
       
@@ -12,32 +31,22 @@ function Product(props){
           <Row>
 
             <Col lg="5" md="6" className='product-left-container'>
-              <ProductImage />
-
-              <Row className='below-md-fixed'>
-                  <Col>
-                      <Button color='primary' type="button" className='btn-block' to="/cart" tag={Link}>Add to Cart</Button>
-                  </Col>
-                  <Col>
-                      <Button color="warning" type="button" className='btn-block'>Buy Now</Button>
-                  </Col>
-              </Row>
+              <ProductImage images={product.varieties[variety].images}/>
+              <ActionButton productId={product.id} varietyId={product.varieties[variety].id} />
             </Col>
 
             <Col lg="7" md="6">
-              <small className='font-weight-600'>Brand</small>
-              <h3>The Lean Startup: How Constant Innovation Creates Radically Successful Businesses Paperback</h3>
-              <p className='text-success font-weight-600'>Special Offers</p>
-              <h1>
-                ₹ 296 
-                <span 
-                  className='font-weight-400 mx-2' 
-                  style={{textDecoration: 'line-through', color:'#808080', fontSize:18}}
-                >
-                  ₹396
-                </span>
-                <span className='text-success font-weight-400' style={{fontSize:18}}>20% off</span>
-              </h1>
+
+              <small className='font-weight-600'>{product.brand}</small>
+              <h3>{product.name} | {product.varieties[variety].name}</h3>
+              { product.varieties[variety].offerEnable ? <p className='text-success font-weight-600'>Special Offers</p> : ''}
+              
+              <div className='price-container mb-2'>
+                <span className='selling-price'>{ product.varieties[variety].offerEnable ? `₹${product.varieties[variety].sellingPrice}` : product.varieties[variety].offerPrice }</span>
+                <span className='not-price'>{ product.varieties[variety].offerEnable ? `₹${product.varieties[variety].sellingPrice}` : '' }</span>
+                <span className='offer'>{ product.varieties[variety].offerEnable ? `${product.varieties[variety].offerPercentage}% off` : '' }</span>
+              </div>
+
               <p>
                 <span className='bg-success text-white py-1 px-2 font-weight-bold' style={{borderRadius:20, fontSize:14}}>
                   3.5 <i className="fa fa-star text-white" aria-hidden="true" style={{fontSize:13}}></i>
@@ -45,7 +54,7 @@ function Product(props){
                 <span className='ml-2' style={{color:'#808080', fontSize:16, fontWeight:500}}>370 ratings and 32 reviews</span>
               </p>
               <div>
-                <p className='font-weight-500' style={{fontSize:14}}><i class="fas fa-tag text-success mr-2"></i><span>Free Delivery</span> within 3 days</p>
+                <p className='font-weight-500' style={{fontSize:14}}><i className="fas fa-tag text-success mr-2"></i><span>Free Delivery</span> within 3 days</p>
               </div>
               
               <div>
@@ -123,32 +132,59 @@ function Product(props){
         </CardBody>
       </Card>
 
-      <ProductContainer url="products/all/all/all/0/6" title="Similar Product" subtitle="You may like" />
+      {/* <ProductContainer url="products/all/all/all/0/6" title="Similar Product" subtitle="You may like" /> */}
     </>
   )
 }
 
 function ProductImage(props){
+  const images = props.images;
+
+  const [active, setActive] = useState(0);
+
+  const change = index => {
+    if(active !== index) setActive(index);
+  };
 
   return (
     <>
-      <div className='product-image' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
+      <div className='product-image' style={{backgroundImage: `url(${images[active]})`}}></div>
               
       <div className='overflow-x mb-2 no-sc'>
-        <div style={{width: `${(78 * 9) + 2}px`}}>
-          <div className='small-product-image' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
-          <div className='small-product-image' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
-          <div className='small-product-image' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
-          <div className='small-product-image' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
-          <div className='small-product-image' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
-          <div className='small-product-image' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
-          <div className='small-product-image' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
-          <div className='small-product-image' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
-          <div className='small-product-image active' style={{backgroundImage: "url(https://rukminim1.flixcart.com/image/832/832/ku5ufm80/sandal/z/3/z/9-ha6056-kraasa-grey-original-imag7cnwczdu57hg.jpeg)"}}></div>
+        <div style={{width: `${(78 * images.length) + 2}px`}}>
+          {
+            images && images.map((image, index) => 
+              <div
+                className={`small-product-image${index === active ? ' active' : ''}`}
+                key={index}
+                style={{backgroundImage: `url(${image})`}}
+                onMouseEnter={() => change(index)}
+              />
+            )
+          }
         </div>
       </div>
     </>
   );
+}
+
+function ActionButton(props){
+  const [inCart, setInCart] = useState(props.inCart);
+
+  const addToCart = () => {
+    console.log(true);
+  };
+
+  return(
+    <Row className='below-md-fixed'>
+      <Col>
+          <Button color='primary' type="button" className='btn-block' onClick={addToCart}>Add to Cart</Button>
+      </Col>
+      <Col>
+          <Button color="warning" type="button" className='btn-block'>Buy Now</Button>
+      </Col>
+    </Row>
+  )
 }
 
 export default Product;

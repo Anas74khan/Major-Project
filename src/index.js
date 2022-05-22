@@ -16,12 +16,10 @@ import "assets/vendor/nucleo/css/nucleo.css";
 import "assets/scss/argon-dashboard-pro-react.scss?v1.2.0";
 
 import ControllerLayout from "layouts/Controller.js";
-import AuthLayout from "layouts/Auth.js";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/auth" render={(props) => <AuthLayout {...props} />} />
       <Route path="/" render={(props) => <ControllerLayout {...props} />} />
       <Redirect from="*" to="/" />
     </Switch>

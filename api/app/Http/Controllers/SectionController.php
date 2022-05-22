@@ -103,4 +103,38 @@ class SectionController extends Controller
         return ['success' => true, "text" => "Data deleted successfully", "id" => $id];
     }
 
+    public function get(Request $request, $pageName = "home"){
+        $data = [
+            "success" => true
+        ];
+
+        $pageName = ($pageName == "home") ? null : $pageName;
+        if($pageName){
+            $data['subcategories'] = ((new TagController) -> get("subcategories",$pageName))['subcategories'];
+        }
+        else
+            $data['categories'] = ((new TagController) -> get())['categories'];
+        $data['sliders'] = ((new SliderController) -> get($pageName))['sliders'];
+        $data['sections'] = [];
+
+        $product = new ProductController;
+
+        for($i = 0; $i < 2; $i++){
+            $productContainer = [];
+            if($i == 1){
+                $productContainer['title'] = "Top rated products";
+                $productContainer['subtitle'] = "Shop Now";
+                $productContainer['products'] = ($product -> get())['products'];
+            }
+            else{
+                $productContainer['title'] = "Best Discount";
+                $productContainer['subtitle'] = "Time to save more";
+                $productContainer['products'] = ($product -> get('all','all','all',0,20,'offer'))['products'];
+            }
+            array_push($data['sections'], $productContainer);
+        }
+
+        return $data;
+    }
+
 }

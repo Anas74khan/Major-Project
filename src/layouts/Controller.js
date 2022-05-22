@@ -1,6 +1,6 @@
 import React from "react";
 // react library for routing
-import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 // core components
 import UserNavbar from "components/Navbars/UserNavbar.js";
 
@@ -8,13 +8,13 @@ import routes from "routes.js";
 import Footer from "components/Footers/Footer";
 
 function Controller() {
-  const location = useLocation();
   const mainContentRef = React.useRef(null);
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainContentRef.current.scrollTop = 0;
-  }, [location]);
+  }, []);
+  
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.collapse) {

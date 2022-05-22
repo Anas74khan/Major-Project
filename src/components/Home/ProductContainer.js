@@ -1,5 +1,4 @@
 import React from 'react';
-import products from 'variables/products';
 import { Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -27,10 +26,9 @@ const ProductCard = props => {
 };
 
 export default function ProductContainer(props) {
-    // const url = props.url;
+    const products = props.products;
     const title = props.title;
     const subtitle = props.subtitle;
-
     
     return (
         <Container fluid>

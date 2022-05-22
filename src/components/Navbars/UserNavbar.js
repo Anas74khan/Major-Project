@@ -122,7 +122,7 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
                 </NavLink>
               </NavItem>
               <UncontrolledDropdown nav>
-                <DropdownToggle className="nav-link cursor-pointer" color="" tag="a">
+                <DropdownToggle className="nav-link cursor-pointer" tag="a">
                   <i className="ni ni-bell-55" style={{fontSize:20}}/>
                 </DropdownToggle>
                 <DropdownMenu
@@ -293,58 +293,13 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <UncontrolledDropdown nav>
-                <DropdownToggle className="nav-link cursor-pointer" color="" tag="a">
+              <NavItem>
+                <NavLink to={{pathname: '/cart'}} tag={Link}>
                   <i className="fas fa-cart-plus" style={{fontSize:20}}/>
-                </DropdownToggle>
-                <DropdownMenu
-                  className="dropdown-menu-lg dropdown-menu-dark bg-default"
-                  right
-                >
-                  <Row className="shortcuts px-4">
-                    <Col
-                      className="shortcut-item"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      xs="4"
-                      tag="a"
-                    >
-                      <Nav to="/admin/calender" tag={Link}>
-                        <span className="shortcut-media avatar rounded-circle bg-gradient-red">
-                          <i className="ni ni-calendar-grid-58" />
-                        </span>
-                        <small>Calendar</small>
-                      </Nav>
-                    </Col>
-                    <Col
-                      className="shortcut-item"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      xs="4"
-                      tag="a"
-                    >
-                      <span className="shortcut-media avatar rounded-circle bg-gradient-info">
-                        <i className="ni ni-credit-card" />
-                      </span>
-                      <small>Payments</small>
-                    </Col>
-                    <Col
-                      className="shortcut-item"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      xs="4"
-                      tag="a"
-                    >
-                      <span className="shortcut-media avatar rounded-circle bg-gradient-green">
-                        <i className="ni ni-books" />
-                      </span>
-                      <small>Reports</small>
-                    </Col>
-                  </Row>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+                </NavLink>
+              </NavItem>
               <UncontrolledDropdown nav>
-                <DropdownToggle className="nav-link pr-0 cursor-pointer" color="" tag="a">
+                <DropdownToggle className="nav-link pr-0 cursor-pointer" tag="a">
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
                       <img

@@ -102,4 +102,6 @@ Route::get('/product/{id}', [\App\Http\Controllers\ProductController::class, 'pr
 
 Route::post('/login',[\App\Http\Controllers\UserController::class,'login']);
 Route::post('/register',[\App\Http\Controllers\UserController::class,'register']);
+Route::get('/',[\App\Http\Controllers\SectionController::class,'get']);
+Route::get('/{pageName}',[\App\Http\Controllers\SectionController::class,'get']);
 Route::get('/unauthorize',function (){ return ['success' => false, 'code' => 100, 'text' => 'Unauthorize access.']; });
