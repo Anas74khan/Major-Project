@@ -11,7 +11,7 @@ export default function ProductDetail(props) {
         api(url,{},result => {
             if(result.success){
                 for(let i = 0; i < result.product.varieties.length; i++){
-                    if(result.product.varieties[i].id == varietyId){
+                    if(result.product.varieties[i].id === varietyId){
                         result.product['varietyId'] = result.product.varieties[i].id;
                         result.product['sellingPrice'] = result.product.varieties[i].sellingPrice;
                         result.product['offerEnable'] = result.product.varieties[i].offerEnable;
@@ -86,7 +86,7 @@ function ProductImage(props){
             <div className='different-images'>
                 {
                     images.map((image,index) =>
-                        <div className={`different-image-container${index == active ? ' active' : '' }`} onClick={() => changeActive(index)} key={index}>
+                        <div className={`different-image-container${index === active ? ' active' : '' }`} onClick={() => changeActive(index)} key={index}>
                             <div className='image' style={{backgroundImage: image ? `url("${image}")` : ''}}></div>
                         </div>
                     )
@@ -112,7 +112,7 @@ function ProductAction(props){
         formData.append('varietyId',props.varietyId);
 
         api(url,{method : 'POST',body: formData},result => {
-            if(result.success || result.code == '113') setCart(true);
+            if(result.success || result.code === '113') setCart(true);
             else console.warn(result.text);
         });
 

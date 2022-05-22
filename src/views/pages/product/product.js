@@ -1,5 +1,6 @@
 import ProductContainer from 'components/Home/ProductContainer'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Row, Col, Card, CardBody, Button, Container } from 'reactstrap'
 
 function Product(props){
@@ -15,7 +16,7 @@ function Product(props){
 
               <Row className='below-md-fixed'>
                   <Col>
-                      <Button color='primary' type="button" className='w-100'>Add to Cart</Button>
+                      <Button color='primary' type="button" className='w-100' to="/cart" tag={Link}>Add to Cart</Button>
                   </Col>
                   <Col>
                       <Button color="warning" type="button" className='w-100'>Buy Now</Button>

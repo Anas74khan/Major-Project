@@ -2,6 +2,7 @@ import Home from "views/pages/home/home";
 import Product from "views/pages/product/product";
 import Login from "views/pages/examples/Login.js";
 import Register from "views/pages/examples/Register.js";
+import Cart from "views/pages/cart/Cart";
 
 const routes = [{
         path: "/home",
@@ -30,6 +31,13 @@ const routes = [{
         miniName: "R",
         component: Register,
         layout: "/auth",
+    },
+    {
+        path: "/cart",
+        name: "cart",
+        miniName: "C",
+        component: Cart,
+        layout: "",
     },
 ];
 
