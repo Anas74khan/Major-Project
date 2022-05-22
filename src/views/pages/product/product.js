@@ -1,7 +1,7 @@
 import ProductContainer from 'components/Home/ProductContainer'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Row, Col, Card, CardBody, Button, Container } from 'reactstrap'
+import { Row, Col, Card, CardBody, Button } from 'reactstrap'
 
 function Product(props){
   return (
