@@ -3,10 +3,12 @@ import React from "react";
 import CategoryCard from "components/Home/CategoriesCard";
 import Slider from "components/Home/Slider";
 import ProductContainer from "components/Home/ProductContainer";
+import Seo from "components/Seo";
 
 const Home = () =>{
     return(
         <>
+            <Seo title="Home | E-commerce" />
             <CategoryCard />
             <hr className="my-0 text-primary bg-secondary shadow" />
             <Slider />

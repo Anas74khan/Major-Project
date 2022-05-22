@@ -12,7 +12,7 @@ const routes = [{
         layout: "",
     },
     {
-        path: "/product",
+        path: "/product/:product",
         name: "Product",
         miniName: "P",
         component: Product,

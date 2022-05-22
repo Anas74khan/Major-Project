@@ -9,7 +9,7 @@ const ProductCard = props => {
     const product = !props.dummy ? props.product : {};
 
     return (
-        <Link to={{pathname: '/product'}} className='product-card'>
+        <Link to={{pathname: `/product/${product.id}`}} className='product-card'>
             <div className='product-image' style={{backgroundImage: product.image ? `url("${product.image}")` : ''}}></div>
             <div className='product-description'>
                 <div className='product-name'>{product.name ? product.name : ''}</div>
