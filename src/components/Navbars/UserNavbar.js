@@ -1,3 +1,4 @@
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames";
 // nodejs library to set properties for components
@@ -25,9 +26,41 @@ import {
   Container,
   Row,
   Col,
+  Modal,
+  Card,
+  CardBody,
+  Button,
 } from "reactstrap";
 
 function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
+  const [userLogin, setUserLogin] = useState(localStorage.getItem("login"));
+  const [modalLogin, setLoginModal] = useState(false);
+  const [modalLogout, setLogoutModal] = useState(false);
+  
+
+  const toggleLoginModal = () =>{
+      setLoginModal(!modalLogin);
+  }
+  
+  const toggleLogoutModal = () =>{
+    setLogoutModal(!modalLogout);
+  }
+
+  const flipModal = () =>{
+    setLoginModal(!modalLogin)
+    setLogoutModal(!modalLogout)
+  }
+
+  const onLogin = () =>{
+    localStorage.setItem("login", "true");
+    setUserLogin("true")
+    setLoginModal(!modalLogin)
+  }
+
+  const onLogout = () =>{
+    localStorage.setItem("login", "false");
+    setUserLogin("false")
+  }
   // function that on mobile devices makes the search open
   const openSearch = () => {
     document.body.classList.add("g-navbar-search-showing");
@@ -54,6 +87,46 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
       document.body.classList.remove("g-navbar-search-hidden");
     }, 500);
   };
+
+  const onLoginSuccess = () =>{
+    return(
+      <UncontrolledDropdown nav>
+        <DropdownToggle className="nav-link pr-0 cursor-pointer" color="" tag="a">
+          <Media className="align-items-center">
+            <span className="avatar avatar-sm rounded-circle">
+              <img
+                alt="..."
+                src={require("assets/img/theme/team-4.jpg").default}
+              />
+            </span>
+            <Media className="ml-2 d-none d-lg-block">
+              <span className="mb-0 text-sm font-weight-bold">
+                John Snow
+              </span>
+            </Media>
+          </Media>
+        </DropdownToggle>
+        <DropdownMenu className="dropdown-menu-arrow" right>
+          <DropdownItem className="noti-title" header tag="div">
+            <h6 className="text-overflow m-0">Welcome!</h6>
+          </DropdownItem>
+          <DropdownItem to="/admin/user-profile" tag={Link}>
+            <i className="ni ni-single-02" />
+            <span>Profile</span>
+          </DropdownItem>
+          <DropdownItem to="/admin/user-profile" tag={Link}>
+            <i className="ni ni-settings-gear-65" />
+            <span>My Order</span>
+          </DropdownItem>
+          <DropdownItem divider />
+          <DropdownItem onClick={() => onLogout()}>
+            <i className="ni ni-user-run" />
+            <span>Logout</span>
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    )
+  }
 
   return (
     <>
@@ -298,53 +371,177 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
                   <i className="fas fa-cart-plus" style={{fontSize:20}}/>
                 </NavLink>
               </NavItem>
-              <UncontrolledDropdown nav>
-                <DropdownToggle className="nav-link pr-0 cursor-pointer" tag="a">
-                  <Media className="align-items-center">
-                    <span className="avatar avatar-sm rounded-circle">
-                      <img
-                        alt="..."
-                        src={require("assets/img/theme/team-4.jpg").default}
-                      />
-                    </span>
-                    <Media className="ml-2 d-none d-lg-block">
-                      <span className="mb-0 text-sm font-weight-bold">
-                        John Snow
-                      </span>
-                    </Media>
-                  </Media>
-                </DropdownToggle>
-                <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem className="noti-title" header tag="div">
-                    <h6 className="text-overflow m-0">Welcome!</h6>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-single-02" />
-                    <span>Profile</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-settings-gear-65" />
-                    <span>My Order</span>
-                  </DropdownItem>
-                  {/* <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-calendar-grid-58" />
-                    <span>Activity</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-support-16" />
-                    <span>Support</span>
-                  </DropdownItem> */}
-                  <DropdownItem divider />
-                  <DropdownItem to="/" tag={Link}>
-                    <i className="ni ni-user-run" />
-                    <span>Logout</span>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {
+                userLogin === "true" ? onLoginSuccess()
+                :
+                <>
+                  <NavItem>
+                    <NavLink onClick={toggleLoginModal} className="cursor-pointer">
+                      <span className="nav-link-inner--text">Login</span>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink onClick={toggleLogoutModal} className="cursor-pointer">
+                      <span className="nav-link-inner--text">Register</span>
+                    </NavLink>
+                  </NavItem>
+                </>
+              }
             </Nav>
           </Collapse>
         </Container>
       </Navbar>
+      <Modal
+          className="modal-dialog-centered"
+          isOpen={modalLogin}
+          toggle={() => toggleLoginModal()}
+      >
+        <Card className="shadowless mb-0 nav-bg">
+          <CardBody >
+            <div className="text-center text-white mb-6">
+              <span>Sign in with credentials</span>
+            </div>
+            <Form role="form" className="px-3">
+              <FormGroup className="mb-3">
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-email-83" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Email"
+                    type="email"
+                    autoComplete="new-email"
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-lock-circle-open" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Password"
+                    type="password"
+                    autoComplete="new-password"
+                  />
+                </InputGroup>
+              </FormGroup>
+              <div className="text-center">
+                <Button to="/admin/dashboard" tag={Link} className="my-4" color="white" type="button" outline onClick={onLogin}>
+                  Log In
+                </Button>
+              </div>
+            </Form>
+            <Row className="mt-3">
+              <Col xs="6">
+                <a
+                  className="text-light"
+                  href="#pablo"
+                  onClick={(e) => e.preventDefault()}
+                >
+                  <small>Forgot password?</small>
+                </a>
+              </Col>
+              <Col className="text-right" xs="6">
+                <a
+                  className="text-light"
+                  href="#pablo"
+                  onClick={flipModal}
+                >
+                  <small>Create new account</small>
+                </a>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
+      </Modal>
+      <Modal
+          className="modal-dialog-centered"
+          isOpen={modalLogout}
+          toggle={() => toggleLogoutModal()}
+      >
+        <Card className="shadowless mb-0 nav-bg">
+          <CardBody >
+            <div className="text-center text-white mb-6">
+              <span>Sign up with credentials</span>
+            </div>
+            <Form role="form" className="px-3">
+              <FormGroup>
+                <InputGroup className="input-group-alternative mb-3">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-hat-3" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input placeholder="Name" type="text" />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative mb-3">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-email-83" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Email"
+                    type="email"
+                    autoComplete="new-email"
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-lock-circle-open" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Password"
+                    type="password"
+                    autoComplete="new-password"
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-lock-circle-open" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Confirm Password"
+                    type="password"
+                    autoComplete="new-password"
+                  />
+                </InputGroup>
+              </FormGroup>
+              <div className="text-center">
+                <Button className="mt-4" color="white" outline type="button">
+                  Create account
+                </Button>
+              </div>
+            </Form>
+            <Row className="mt-3">
+              <Col className="text-center">
+                <a
+                  className="text-light"
+                  href="#pablo"
+                  onClick={flipModal}
+                >
+                  <small>Already have account ?</small>
+                </a>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
+      </Modal>
     </>
   );
 }
