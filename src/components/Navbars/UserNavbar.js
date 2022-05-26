@@ -400,9 +400,9 @@ function NotLoggedIn(props){
       </Modal>
 
       <Modal
-          className="modal-dialog-centered"
-          isOpen={modalLogout}
-          toggle={() => toggleLogoutModal()}
+        className="modal-dialog-centered"
+        isOpen={modalLogout}
+        backdrop="static"
       >
         <RegisterForm flipModal={flipModal} toggleLogoutModal={toggleLogoutModal}/>
       </Modal>
