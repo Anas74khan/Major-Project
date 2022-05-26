@@ -63,7 +63,7 @@ class UserController extends Controller
             -> where('password',$password) -> get();
 
         if(count($users) == 1)
-            return ['result' => true, 'access_token' => $users[0]['remember_token']];
+            return ['success' => true, 'access_token' => $users[0]['remember_token']];
 
         return ['success' => false, 'code' => 102, 'text' => 'Invalid login credentials.'];
     }
