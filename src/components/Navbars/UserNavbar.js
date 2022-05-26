@@ -35,8 +35,7 @@ import {
 import api from "services/api";
 import Preloader from "components/Preloader";
 
-function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
-  const [userAuthToken, setUserAuthToken] = useState(window.localStorage.getItem("authToken"));
+function UserNavbar({ theme, sidenavOpen, toggleSidenav, user }) {
 
   const openSearch = () => {
     document.body.classList.add("g-navbar-search-showing");
@@ -129,7 +128,7 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
                   <i className="ni ni-zoom-split-in"/>
                 </NavLink>
               </NavItem>
-              { userAuthToken ? <LoggedIn /> : <NotLoggedIn /> }
+              { user ? <LoggedIn /> : <NotLoggedIn /> }
             </Nav>
           </Collapse>
         </Container>
