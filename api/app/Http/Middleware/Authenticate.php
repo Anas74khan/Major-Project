@@ -9,14 +9,19 @@ use App\Models\User;
 class Authenticate
 {
     
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $type)
     {
-        if($request -> is('api/*')){
+        if($type == "api" || $type == "apiUser"){
             $token = $request -> bearerToken();
-            $user = User :: where('remember_token', $token) -> get();
-            if(count($user) != 1)
+            $user = User :: where('remember_token', $token)
+                        -> first([
+                            'name','email','username','id',
+                            User :: raw('(SELECT COALESCE(SUM(carts.quantity),0) FROM carts WHERE carts.userId = users.id) AS cart')
+                        ]);
+            if($user !== null)
+                $request -> user = $user;
+            else if($type != "apiUser")
                 return redirect('api/unauthorize');
-            $request -> user = $user[0];
         }
         else{
             $adminId = $request -> session() -> get('adminId');

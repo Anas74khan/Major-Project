@@ -51,57 +51,64 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('/address/{id}',[\App\Http\Controllers\AddressController::class,'delete']);
 });
 
-/*
-|---------------------------------------------------------------------------
-| Sliders
-|---------------------------------------------------------------------------
-*/
 
-Route::get('/sliders', [\App\Http\Controllers\SliderController::class, 'get']);
-Route::get('/sliders/{slug}', [\App\Http\Controllers\SliderController::class, 'get']);
+Route::group(['middleware' => 'auth:apiUser'], function () {
 
-/*
-|---------------------------------------------------------------------------
-| Tags
-|---------------------------------------------------------------------------
-*/
+    /*
+    |---------------------------------------------------------------------------
+    | Sliders
+    |---------------------------------------------------------------------------
+    */
 
-Route::get('/categories', [\App\Http\Controllers\TagController::class, 'get']);
-Route::get('/tags/{category}', [\App\Http\Controllers\TagController::class, 'get']);
-Route::get('/tags/{category}/{slug}', [\App\Http\Controllers\TagController::class, 'get']);
+    Route::get('/sliders', [\App\Http\Controllers\SliderController::class, 'get']);
+    Route::get('/sliders/{slug}', [\App\Http\Controllers\SliderController::class, 'get']);
 
-/*
-|---------------------------------------------------------------------------
-| Sections
-|---------------------------------------------------------------------------
-*/
-// Route::get('/sections', [\App\Http\Controllers\SectionController::class, 'get']);
-// Route::get('/sections/{slug}', [\App\Http\Controllers\SectionController::class, 'get']);
+    /*
+    |---------------------------------------------------------------------------
+    | Tags
+    |---------------------------------------------------------------------------
+    */
 
-/*
-|---------------------------------------------------------------------------
-| Products
-|---------------------------------------------------------------------------
-*/
+    Route::get('/categories', [\App\Http\Controllers\TagController::class, 'get']);
+    Route::get('/tags/{category}', [\App\Http\Controllers\TagController::class, 'get']);
+    Route::get('/tags/{category}/{slug}', [\App\Http\Controllers\TagController::class, 'get']);
 
-Route::get('/products', [\App\Http\Controllers\ProductController::class, 'get']);
-Route::get('/products/{category}', [\App\Http\Controllers\ProductController::class, 'get']);
-Route::get('/products/{category}/{subcategory}', [\App\Http\Controllers\ProductController::class, 'get']);
-Route::get('/products/{category}/{subcategory}/{brand}', [\App\Http\Controllers\ProductController::class, 'get']);
-Route::get('/products/{category}/{subcategory}/{brand}/{from}', [\App\Http\Controllers\ProductController::class, 'get']);
-Route::get('/products/{category}/{subcategory}/{brand}/{from}/{limit}', [\App\Http\Controllers\ProductController::class, 'get']);
-Route::get('/products/{category}/{subcategory}/{brand}/{from}/{limit}/{order_by}', [\App\Http\Controllers\ProductController::class, 'get']);
+    /*
+    |---------------------------------------------------------------------------
+    | Sections
+    |---------------------------------------------------------------------------
+    */
+    // Route::get('/sections', [\App\Http\Controllers\SectionController::class, 'get']);
+    // Route::get('/sections/{slug}', [\App\Http\Controllers\SectionController::class, 'get']);
 
-Route::get('/product/{id}', [\App\Http\Controllers\ProductController::class, 'product']);
+    /*
+    |---------------------------------------------------------------------------
+    | Products
+    |---------------------------------------------------------------------------
+    */
 
-/*
-|---------------------------------------------------------------------------
-| Login
-|---------------------------------------------------------------------------
-*/
+    Route::get('/products', [\App\Http\Controllers\ProductController::class, 'get']);
+    Route::get('/products/{category}', [\App\Http\Controllers\ProductController::class, 'get']);
+    Route::get('/products/{category}/{subcategory}', [\App\Http\Controllers\ProductController::class, 'get']);
+    Route::get('/products/{category}/{subcategory}/{brand}', [\App\Http\Controllers\ProductController::class, 'get']);
+    Route::get('/products/{category}/{subcategory}/{brand}/{from}', [\App\Http\Controllers\ProductController::class, 'get']);
+    Route::get('/products/{category}/{subcategory}/{brand}/{from}/{limit}', [\App\Http\Controllers\ProductController::class, 'get']);
+    Route::get('/products/{category}/{subcategory}/{brand}/{from}/{limit}/{order_by}', [\App\Http\Controllers\ProductController::class, 'get']);
 
-Route::post('/login',[\App\Http\Controllers\UserController::class,'login']);
-Route::post('/register',[\App\Http\Controllers\UserController::class,'register']);
-Route::get('/',[\App\Http\Controllers\SectionController::class,'get']);
-Route::get('/{pageName}',[\App\Http\Controllers\SectionController::class,'get']);
-Route::get('/unauthorize',function (){ return ['success' => false, 'code' => 100, 'text' => 'Unauthorize access.']; });
+    Route::get('/product/{id}', [\App\Http\Controllers\ProductController::class, 'product']);
+
+    /*
+    |---------------------------------------------------------------------------
+    | Login
+    |---------------------------------------------------------------------------
+    */
+
+    Route::post('/login',[\App\Http\Controllers\UserController::class,'login']);
+    Route::post('/register',[\App\Http\Controllers\UserController::class,'register']);
+    Route::get('/unauthorize',function (){ return ['success' => false, 'code' => 100, 'text' => 'Unauthorize access.']; });
+
+
+    Route::get('/',[\App\Http\Controllers\SectionController::class,'get']);
+    Route::get('/{pageName}',[\App\Http\Controllers\SectionController::class,'get']);
+
+});

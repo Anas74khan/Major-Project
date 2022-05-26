@@ -182,7 +182,7 @@ class ProductController extends Controller
         return ['success' => true, 'products' => $products];
     }
 
-    public function product($id = 0){
+    public function product(Request $request, $id = 0){
         $product = Product :: join('varieties','varieties.productId','=','products.id')
                     -> where('varieties.id',$id) -> where('varieties.visibility',1)
                     -> first(['products.id','products.categories','products.subcategories','products.name','products.brand','products.description']);
@@ -207,7 +207,7 @@ class ProductController extends Controller
         }
 
 
-        return ['success' => true,'product' => $product];
+        return ['success' => true,'product' => $product, 'user' => $request -> user];
     }
 
     public function varieties(Request $request, $id = 0){

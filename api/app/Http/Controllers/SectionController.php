@@ -105,7 +105,8 @@ class SectionController extends Controller
 
     public function get(Request $request, $pageName = "home"){
         $data = [
-            "success" => true
+            "success" => true,
+            "user" => $request -> user
         ];
 
         $pageName = ($pageName == "home") ? null : $pageName;
