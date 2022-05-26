@@ -2,6 +2,8 @@ import Home from "views/pages/home/home";
 import Product from "views/pages/product/product";
 import CartConatiner from "views/pages/cart/Cart";
 
+const authToken = window.localStorage.getItem('authToken');
+
 const routes = [{
         path: "/home",
         name: "Home",
@@ -22,6 +24,7 @@ const routes = [{
         miniName: "C",
         component: CartConatiner,
         layout: "",
+        invalid: !authToken ? true : false
     },
 ];
 

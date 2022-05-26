@@ -20,7 +20,7 @@ function Controller() {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
-      if (prop.layout === "") {
+      if (prop.layout === "" && !prop.invalid) {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -42,7 +42,7 @@ function Controller() {
         />
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/home" />
+          <Redirect replace from="*" to='/home' />
         </Switch>
         <Footer />
       </div>

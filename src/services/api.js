@@ -1,8 +1,13 @@
 function getOptions(options){
-    const authToken = 'Bearer 1647692835tUVxuFjuek6xEj8JHPlsWlHN7aGHz6uBwHS8PcxThuTkPLrEJA4xgKg';
+    const authToken = window.localStorage.getItem('authToken');
+    
+    let headers ={
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    };
 
-    if(authToken) return {...options, headers:{'Authorization' : authToken}};
-    return {...options};
+    if(authToken) headers = {...headers, 'Authorization' : `Bearer ${authToken}`};
+    return {...options, headers};
 }
 function api(url,options,callback){
     const apiurl = 'http://localhost:8000/api/' + url;

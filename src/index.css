@@ -94,6 +94,31 @@ input[type=number] {
     align-items: center;
     background-color: var(--white);
 }
+.preloader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .1);
+}
+.modal-toggle{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    padding: 2rem;
+    font-size: 15px;
+    font-weight: 400;
+    font-family: cursive;
+    cursor: pointer;
+}
+.nav-item i{
+    font-size: 20px;
+}
 
 
 /* Product */
@@ -365,6 +390,9 @@ input[type=number] {
     color: var(--gray);
     margin-left: 10px;
     position: relative;
+}
+input:focus{
+    border-color: inherit !important;
 }
 
 .cart-not-price::after {
