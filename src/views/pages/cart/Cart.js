@@ -1,3 +1,4 @@
+import { formatDate } from '@fullcalendar/core';
 import Loader from 'components/Loader';
 import Preloader from 'components/Preloader';
 import { func } from 'prop-types';
@@ -111,12 +112,24 @@ function Cart(props){
     const cart = props.cart;
     const [count, setCount] = useState(cart.quantity);
 
+    let today = new Date();
+
     const clamp = value => {
         value = value > 0 ? value : 1;
         value = value > 99 ? 99 : value;
         setCount(value);
         props.updateQuantity(props.index,value);
     };
+
+    const dateFormat = d => {
+        let day = d.getDate();
+        if(day < 10) day = "0" + day;
+
+        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        let month = months[d.getMonth() - 1];
+
+        return day + " " + month + " " + d.getFullYear();
+    }
 
 
     return(
@@ -150,7 +163,7 @@ function Cart(props){
                     </div>
                 </Col>
                 <Col sm='4'>
-                    <span className='card-delivery'>Delivery by Sat May 28 | <span className='text-success'>Free</span></span>
+                    <span className='card-delivery'>Delivery by - <span className='font-weight-600'> {dateFormat(today)}</span> | <span className='text-success'>Free</span></span>
                 </Col>
             </Row>
         </>
