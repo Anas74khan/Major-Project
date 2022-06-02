@@ -37,9 +37,7 @@ function Controller() {
   return (
     <>
       <div className="main-content" ref={mainContentRef}>
-        <UserNavbar
-          theme={"dark"}
-        />
+        <UserNavbar theme={"dark"} />
         <Switch>
           {getRoutes(routes)}
           <Redirect replace from="*" to='/home' />

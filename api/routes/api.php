@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/address',[\App\Http\Controllers\AddressController::class,'get']);
     Route::post('/address',[\App\Http\Controllers\AddressController::class,'add']);
-    Route::put('/address/{id}',[\App\Http\Controllers\AddressController::class,'update']);
+    Route::put('/address',[\App\Http\Controllers\AddressController::class,'update']);
     Route::put('/useaddress/{id}',[\App\Http\Controllers\AddressController::class,'useAddress']);
     Route::delete('/address/{id}',[\App\Http\Controllers\AddressController::class,'delete']);
 });

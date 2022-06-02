@@ -38,6 +38,7 @@ class AddressController extends Controller
         $address -> userId = $request -> user['id'];
 
         $address -> save();
+        $address -> inUse = 1;
 
         $this -> inUse($request -> user['id'],$address -> id);
         return ['success' => true, 'address' => $address];
@@ -52,7 +53,7 @@ class AddressController extends Controller
             'city' => $request -> input('city'),
             'state' => $request -> input('state')
         ];
-        $status = Address :: where('id',$request -> input('id')) -> where('id',$request -> user['id']) -> get();
+        $status = Address :: where('id',$request -> input('id')) -> where('userId',$request -> user['id']) -> get();
 
         if(count($status) != 1)
             return ['success' => false,'code' => 132, 'text' => 'Invalid address id.'];
@@ -67,9 +68,10 @@ class AddressController extends Controller
         $address['address2'] = $request -> input('address2');
         $address['type'] = $request -> input('type');
         
-        Address :: where('id',$request -> input('id')) -> where('id',$request -> user['id']) -> update($address);
+        Address :: where('id',$request -> input('id')) -> where('userId',$request -> user['id']) -> update($address);
 
         $address['id'] = $request -> input('id');
+        $address['inUse'] = 1;
         $this -> inUse($request -> user['id'],$address['id']);
         return ['success' => true, 'address' => $address];
 
@@ -95,8 +97,8 @@ class AddressController extends Controller
     }
 
     protected function inUse($userId,$id){
-        Address :: where('userId',$userId) -> update(['inUse',0]);
-        Address :: where('userId',$userId) -> where('id',$id) -> update(['inUse',1]);
+        Address :: where('userId',$userId) -> update(['inUse' => 0]);
+        Address :: where('userId',$userId) -> where('id',$id) -> update(['inUse' => 1]);
     }
 
 }

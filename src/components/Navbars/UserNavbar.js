@@ -32,10 +32,11 @@ import {
   Button,
   CardHeader,
 } from "reactstrap";
-import api from "services/api";
+import { api, userDetails } from "services/api";
 import Preloader from "components/Preloader";
 
-function UserNavbar({ theme, sidenavOpen, toggleSidenav, user }) {
+function UserNavbar({ theme, sidenavOpen, toggleSidenav }) {
+  const user = userDetails();
 
   const openSearch = () => {
     document.body.classList.add("g-navbar-search-showing");
@@ -141,6 +142,7 @@ function UserNavbar({ theme, sidenavOpen, toggleSidenav, user }) {
 function LoggedIn(props){
   const logout = () => {
     window.localStorage.removeItem('authToken');
+    window.localStorage.removeItem('user');
     window.location.reload();
   }
 
@@ -337,7 +339,7 @@ function LoggedIn(props){
             </span>
             <Media className="ml-2 d-none d-lg-block">
               <span className="mb-0 text-sm font-weight-bold">
-                John Snow
+                My Account
               </span>
             </Media>
           </Media>

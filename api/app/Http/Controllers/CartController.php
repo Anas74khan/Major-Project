@@ -9,12 +9,23 @@ use App\Models\Variety;
 class CartController extends Controller
 {
     
+    protected $productImage = "images/products/";
     public function get(Request $request){
         $user = $request -> user;
 
-        $carts = Cart :: where('userId',$user['id']) -> get();
+        $carts = Cart :: where('userId',$user['id'])
+                        -> join('products','products.id', '=', 'carts.productId')
+                        -> join('varieties','varieties.id', '=', 'carts.varietyId')
+                        -> get([
+                            'products.name AS productName', 'varieties.name AS varietyName', 'varieties.sellingPrice',
+                            'varieties.offerPrice','varieties.offerPercentage','varieties.offerEnable',
+                            'carts.quantity', 'varieties.images AS image', 'carts.productId', 'carts.id'
+                        ]);
 
-        return ['success' => true, 'carts' => $carts];
+        for($i = 0; $i < count($carts); $i++)
+            $carts[$i]['image'] = asset($this -> productImage.json_decode($carts[$i]['image'], true)[0]);
+
+        return ['success' => true, 'carts' => $carts, 'addresses' => (AddressController :: get($request))['addresses']];
     }
 
     public function add(Request $request){
@@ -57,7 +68,6 @@ class CartController extends Controller
     }
 
     public function delete(Request $request,$id){
-        return ['akdj'];
         $status = Cart :: where('id',$id) -> where('userId',$request -> user['id']) -> delete();
 
         if($status)

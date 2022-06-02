@@ -258,29 +258,45 @@ input[type=number] {
 .product {
     position: relative;
 }
-
-.product .product-image {
-    width: 100%;
-    padding-top: 75%;
+.product-image-container{
+    padding: 5%;
+    border: 1px solid var(--secondary);
+}
+.product .product-image-container .product-image {
+    width: 70%;
+    padding-top: 70%;
+    margin: auto;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     margin-bottom: .5rem;
 }
-
-.product .small-product-image {
-    width: 78px;
-    height: 58px;
+.product .product-small-image-container{
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+.product .product-small-image-container::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--secondary);
+}
+.product .product-small-image-container.active::after{
+    border: 1px solid var(--primary);
+}
+.product .product-small-image-container .small-product-image {
+    width: 50px;
+    height: 50px;
+    margin: 7px;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    border-radius: 5px;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.product .small-product-image.active {
-    border: 1px solid var(--primary);
 }
 
 .price-detail-heading {

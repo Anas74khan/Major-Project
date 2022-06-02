@@ -16,7 +16,7 @@ class Authenticate
             $user = User :: where('remember_token', $token)
                         -> first([
                             'name','email','username','id',
-                            User :: raw('(SELECT COALESCE(SUM(carts.quantity),0) FROM carts WHERE carts.userId = users.id) AS cart')
+                            User :: raw('(SELECT SUM(carts.quantity) FROM carts WHERE carts.userId = users.id) AS cart')
                         ]);
             if($user !== null)
                 $request -> user = $user;

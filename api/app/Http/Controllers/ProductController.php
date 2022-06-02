@@ -183,9 +183,17 @@ class ProductController extends Controller
     }
 
     public function product(Request $request, $id = 0){
+        $userId = $request -> user !== null ? $request -> user['id'] : 0;
         $product = Product :: join('varieties','varieties.productId','=','products.id')
                     -> where('varieties.id',$id) -> where('varieties.visibility',1)
-                    -> first(['products.id','products.categories','products.subcategories','products.name','products.brand','products.description']);
+                    -> leftJoin('reviews','reviews.productId','=','products.id')
+                    -> groupBy(['products.id','products.categories','products.subcategories','products.brand','products.name','products.description'])
+                    -> first([
+                        'products.id','products.categories','products.subcategories',
+                        'products.name','products.brand','products.description',
+                        Product::raw('COALESCE(round(AVG(reviews.rating),2),0) AS rating'),
+                        Product::raw('COALESCE(COUNT(reviews.id),0) AS ratingCount')
+                    ]);
         
         if(empty($product['id'])) return ['success' => false,'code' => 201,'text' => 'Product not found.'];
 
@@ -193,10 +201,18 @@ class ProductController extends Controller
         $product['brand'] = $product['brand']['tag'] ? $product['brand']['tag'] : 'Brand not found';
         
         $product['varieties'] = Variety :: where('visibility',1) -> where('productId',$product['id'])
-                                    -> get(['varieties.id','varieties.name','varieties.id','varieties.images',
+                                    -> get([
+                                            'varieties.id','varieties.name','varieties.id','varieties.images',
                                             'varieties.features','varieties.inStock','varieties.sellingPrice',
-                                            'varieties.offerEnable','varieties.offerPrice','varieties.offerPercentage']);
+                                            'varieties.offerEnable','varieties.offerPrice','varieties.offerPercentage',
+                                            Variety :: raw("(SELECT COUNT(`carts`.`id`) FROM `carts` WHERE `carts`.`userId` = $userId AND `carts`.`varietyId` = `varieties`.`id`) AS `inCart`")
+                                        ]);
+
+        $product['reviews'] = Review :: where('productId', $id) -> join('users','users.id', '=', 'reviews.userId') -> take(3) -> get(['rating','description','name','reviews.created_at AS date']);
         
+        for($i = 0; $i < count($product['reviews']); $i++)
+            $product['reviews'][$i]['date'] = date('d M Y',strtotime($product['reviews'][$i]['date']));
+
         for($i = 0; $i < count($product['varieties']); $i++){
             $images = json_decode($product['varieties'][$i]['images'],true);
 

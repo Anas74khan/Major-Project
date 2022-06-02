@@ -4,7 +4,7 @@ import CategoryCard from "components/Home/CategoriesCard";
 import Slider from "components/Home/Slider";
 import ProductContainer from "components/Home/ProductContainer";
 import Seo from "components/Seo";
-import api from "services/api";
+import { api } from "services/api";
 import Loader from "components/Loader";
 
 const Home = () =>{
