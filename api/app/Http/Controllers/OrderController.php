@@ -138,7 +138,25 @@ class OrderController extends Controller
         $from--;
         if((int)$from < 1) $from = 0;
 
-        $orders = Order :: where('userId',$request -> user['id']) -> take(20) -> skip($from) -> orderBy('id','DESC') -> get();
+        $orders = Order :: where('userId',$request -> user['id'])
+                        -> join('varieties', 'varieties.id', '=', 'orders.varietyId')
+                        -> join('statuses', 'statuses.statusId', '=', 'orders.status')
+                        -> take(20)
+                        -> skip($from)
+                        -> orderBy('orders.id','DESC')
+                        -> get([
+                            'orders.orderNo','orders.quantity','orders.name',
+                            'orders.mobileNo','orders.address1','orders.pincode',
+                            'orders.city','orders.state','orders.type',
+                            'orders.updated_at AS actionDate','orders.productName','orders.sellingPrice',
+                            'orders.offerPrice','orders.offerEnable','varieties.images AS image',
+                            'statuses.status'
+                        ]);
+        
+        for($i = 0; $i < count($orders); $i++){
+            $orders[$i]['image'] = asset($this -> productImagePath.json_decode($orders[$i]['image'], true)[0]);
+            $orders[$i]['actionDate'] = date('d M Y', strtotime($orders[$i]['actionDate']));
+        }
 
         return ['success' => true, 'orders' => $orders];
     }
@@ -194,12 +212,12 @@ class OrderController extends Controller
         return ['success' => true, 'orders' => $orders];
     }
 
-    public function cancelOrder(Request $request,$id){
+    public function cancelOrder(Request $request,$orderNo = 0){
         $order = ['status' => 2];
 
-        $status = Order :: where('userId',$request -> user['id']) -> where('id',$id) -> where('status','<',5) -> update($order);
+        $status = Order :: where('userId',$request -> user['id']) -> where('orderNo',$orderNo) -> where('status','<',5) -> update($order);
 
-        $order['id'] = $id;
+        $order['orderNo'] = $orderNo;
 
         if($status)
             return ['success' => true, 'order' => $order];
@@ -239,6 +257,28 @@ class OrderController extends Controller
         }
 
         return $result;
+    }
+
+    public function order(Request $request, $orderNo = 0){
+        $order = Order :: where('userId',$request -> user['id'])
+                        -> where('orderNo', $orderNo)
+                        -> join('varieties', 'varieties.id', '=', 'orders.varietyId')
+                        -> join('statuses', 'statuses.statusId', '=', 'orders.status')
+                        -> first([
+                            'orders.orderNo','orders.quantity','orders.name',
+                            'orders.mobileNo','orders.address1','orders.pincode',
+                            'orders.city','orders.state','orders.type',
+                            'orders.updated_at AS actionDate','orders.productName','orders.sellingPrice',
+                            'orders.offerPrice','orders.offerEnable','varieties.images AS image',
+                            'statuses.status', 'orders.id', 'statuses.statusId'
+                        ]);
+
+        if($order['id'] < 1) return ['success' => false, 'code' => 203, 'text' => 'Order not found.'];
+        
+        $order['image'] = asset($this -> productImagePath.json_decode($order['image'], true)[0]);
+        $order['actionDate'] = date('d M Y', strtotime($order['actionDate']));
+
+        return ['success' => true, 'order' => $order];
     }
 
 }

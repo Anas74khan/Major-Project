@@ -190,7 +190,7 @@ function PriceDetails(props){
             let to = 'orders';
             if(response.orders.length === 1) to = '/order/' + response.orders[0].orderNo;
             window.location.href = window.location.protocol + '//' + window.location.host + to;
-        })
+        });
     }
 
     return (

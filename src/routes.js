@@ -1,8 +1,10 @@
 import Home from "views/pages/home/home";
 import Product from "views/pages/product/product";
-import CartConatiner from "views/pages/cart/Cart";
+import CartContainer from "views/pages/cart/Cart";
+import OrdersContainer from "views/pages/order/orders";
+import OrderContainer from "views/pages/order/order";
 
-const authToken = window.localStorage.getItem('authToken');
+const authToken = window.localStorage.getItem('user');
 
 const routes = [{
         path: "/home",
@@ -22,7 +24,23 @@ const routes = [{
         path: "/cart",
         name: "cart",
         miniName: "C",
-        component: CartConatiner,
+        component: CartContainer,
+        layout: "",
+        invalid: !authToken ? true : false
+    },
+    {
+        path: "/orders",
+        name: "orders",
+        miniName: "O",
+        component: OrdersContainer,
+        layout: "",
+        invalid: !authToken ? true : false
+    },
+    {
+        path: "/order/:orderNo",
+        name: "orderDetails",
+        miniName: "OD",
+        component: OrderContainer,
         layout: "",
         invalid: !authToken ? true : false
     },

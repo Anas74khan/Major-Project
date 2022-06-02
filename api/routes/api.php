@@ -35,8 +35,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/orders',[\App\Http\Controllers\OrderController::class,'apiIndex']);
     Route::get('/orders/{from}',[\App\Http\Controllers\OrderController::class,'apiIndex']);
+    Route::get('/order/{orderNo}',[\App\Http\Controllers\OrderController::class,'order']);
     Route::post('/order/cart',[\App\Http\Controllers\OrderController::class,'orderCart']);
-    Route::delete('/order/{id}',[\App\Http\Controllers\OrderController::class,'cancelOrder']);
+    Route::delete('/order/{orderNo}',[\App\Http\Controllers\OrderController::class,'cancelOrder']);
 
     /*
     |---------------------------------------------------------------------------

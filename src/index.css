@@ -588,3 +588,7 @@ input:focus{
 .nav-bg {
     background-color: #43a1f6 !important
 }
+
+.border-1-gray{
+    border: 1px solid var(--secondary);
+}
