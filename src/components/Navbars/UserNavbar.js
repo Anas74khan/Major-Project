@@ -148,7 +148,7 @@ function LoggedIn(props){
 
   return(
     <>
-      <UncontrolledDropdown nav>
+      {/* <UncontrolledDropdown nav>
         <DropdownToggle className="nav-link cursor-pointer" tag="a">
           <i className="ni ni-bell-55"/>
         </DropdownToggle>
@@ -318,7 +318,7 @@ function LoggedIn(props){
             View all
           </DropdownItem>
         </DropdownMenu>
-      </UncontrolledDropdown>
+      </UncontrolledDropdown> */}
       {
         window.location.pathname !== "/cart" ?
         <NavItem>
@@ -334,7 +334,7 @@ function LoggedIn(props){
             <span className="avatar avatar-sm rounded-circle">
               <img
                 alt="..."
-                src={require("assets/img/theme/team-4.jpg").default}
+                src={require("assets/img/theme/avatar.jpg").default}
               />
             </span>
             <Media className="ml-2 d-none d-lg-block">
